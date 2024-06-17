@@ -1,3 +1,4 @@
+"use client"
 import { useRef, useEffect } from "react";
 
 const useAudio = (src: string, options = { loop: false }) => {
