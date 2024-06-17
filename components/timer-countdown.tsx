@@ -110,15 +110,13 @@ const TimerCountdown = ({
         <Progress value={progressValue} />
       </div>
       <div className="mt-5 flex items-center space-x-5">
-        {!isComplete && (
-          <Button variant="ghost" onClick={handleStart}>
-            {isStarted ? (
-              <Pause className="w-5 h-5" />
-            ) : (
-              <Play className="w-5 h-5" />
-            )}
-          </Button>
-        )}
+        <Button variant="ghost" onClick={handleStart}>
+          {isStarted ? (
+            <Pause className="w-5 h-5" />
+          ) : (
+            <Play className="w-5 h-5" />
+          )}
+        </Button>
         <Button variant="ghost" onClick={handleReset}>
           <RotateCw className="w-5 h-5" />
         </Button>
