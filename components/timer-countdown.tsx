@@ -100,7 +100,7 @@ const TimerCountdown = ({
   const progressValue = ((totalTime - elapsedTime) / totalTime) * 100;
 
   return (
-    <div className="my-20 flex flex-col items-center justify-center">
+    <div className="mt-10 mb-5 flex flex-col items-center justify-center">
       <div className="flex items-center space-x-2 text-8xl">
         <span>{String(time.minutes).padStart(2, "0")}</span>
         <span>:</span>

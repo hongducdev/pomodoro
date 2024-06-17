@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const HomePage = () => {
   return (
-    <div className="bg-zinc-950 antialiased bg-dot-olivia/[0.5] w-full h-screen flex items-center justify-center">
+    <div>
       <div className="w-[800px] bg-zinc-950 text-zinc-50 p-5 rounded-xl border border-zinc-400 text-center">
         <Tabs defaultValue="pomodoro">
           <TabsList>
