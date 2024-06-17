@@ -16,14 +16,7 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL(siteConfig.url),
   description: siteConfig.description,
-  keywords: [
-    "tomatoflow",
-    "pomodoro",
-    "coding",
-    "study",
-    "flow",
-    "hongducdev"
-  ],
+  keywords: ["tomatoflow", "pomodoro", "coding", "study", "flow", "hongducdev"],
   authors: [
     {
       name: "hongducdev",
@@ -61,6 +54,7 @@ export const metadata: Metadata = {
   },
   manifest: `${siteConfig.url}/site.webmanifest`,
   robots: "index, follow",
+  themeColor: "#f4cdc3",
 };
 
 export default function RootLayout({
