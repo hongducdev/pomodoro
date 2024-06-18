@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
+import type { Viewport } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import { siteConfig } from "@/config/site";
 
 const outfit = Outfit({ subsets: ["latin"] });
+
+export const viewport: Viewport = {
+  themeColor: "#f4cdc3",
+};
 
 export const metadata: Metadata = {
   title: {
@@ -54,7 +59,6 @@ export const metadata: Metadata = {
   },
   manifest: `${siteConfig.url}/site.webmanifest`,
   robots: "index, follow",
-  themeColor: "#f4cdc3",
 };
 
 export default function RootLayout({
