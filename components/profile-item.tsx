@@ -1,5 +1,9 @@
 import { IProfile } from "@/@types";
 
+const padTime = (time: number): string => {
+	return time < 10 ? `0${time}` : `${time}`;
+};
+
 const ProfileItem = ({profile}: { profile: IProfile }) => {
 	return (
 		<div
@@ -19,7 +23,7 @@ const ProfileItem = ({profile}: { profile: IProfile }) => {
 				<span
 					className={`absolute font-medium text-zinc-50 transition-all duration-300 ease-in-out bottom-5 left-1/2 -translate-x-1/2 group-hover:text-zinc-800`}
 				>
-          {profile.minutes} : {profile.seconds}
+          {padTime(profile.minutes)} : {padTime(profile.seconds)}
         </span>
 			</div>
 		</div>
