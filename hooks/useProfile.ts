@@ -1,22 +1,27 @@
 import { useEffect, useState } from "react";
 import { IProfile } from "@/@types";
+import useFormCreateProfile from "@/stores/useFormCreateProfile";
 
 const useProfile = () => {
-	const [profiles, setProfiles] = useState<IProfile[]>([]);
+	const [ profiles, setProfiles ] = useState<IProfile[]>([]);
+	const {isLoadData} = useFormCreateProfile();
 
 	useEffect(() => {
 		const storedProfiles = localStorage.getItem('profiles');
 		if (storedProfiles) {
 			setProfiles(JSON.parse(storedProfiles));
+			if (isLoadData) {
+				useFormCreateProfile.getState().setIsLoadData(false);
+			}
 		}
-	}, []);
+	}, [ isLoadData ]);
 
 	const saveProfilesToLocalStorage = (profiles: IProfile[]) => {
 		localStorage.setItem('profiles', JSON.stringify(profiles));
 	};
 
 	const addProfile = (profile: IProfile) => {
-		const newProfiles = [...profiles, profile];
+		const newProfiles = [ ...profiles, profile ];
 		setProfiles(newProfiles);
 		saveProfilesToLocalStorage(newProfiles);
 	};
@@ -39,8 +44,8 @@ const useProfile = () => {
 		profiles,
 		addProfile,
 		updateProfile,
-		deleteProfile
+		deleteProfile,
 	};
-}
+};
 
 export default useProfile;

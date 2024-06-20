@@ -1,18 +1,22 @@
+"use client";
 import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog"
+	DialogTrigger
+} from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
 import CreateFormProfile from "@/components/create-form-profile";
+import useFormCreateProfile from "@/stores/useFormCreateProfile";
 
 const CreateProfile = () => {
+	const {isOpen, toggle} = useFormCreateProfile(); // Access the form dialog state
+
 	return (
-		<Dialog>
-			<DialogTrigger>
+		<Dialog open={isOpen} onOpenChange={toggle}>
+			<DialogTrigger asChild>
 				<div
 					className="relative group w-[300px] h-[300px] rounded-md bg-summer-dog p-0.5 transition-all duration-500 ease-in-out cursor-pointer">
 					<div
@@ -23,10 +27,9 @@ const CreateProfile = () => {
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Are you absolutely sure?</DialogTitle>
+					<DialogTitle>Create New Profile</DialogTitle>
 					<DialogDescription>
-						This action cannot be undone. This will permanently delete your account
-						and remove your data from our servers.
+						Fill out the form below to create a new profile.
 					</DialogDescription>
 				</DialogHeader>
 				<CreateFormProfile/>
