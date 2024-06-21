@@ -1,5 +1,6 @@
 import { IProfile } from "@/@types";
 import { SquareArrowOutUpRight } from "lucide-react";
+import EditProfile from "./edit-profile";
 
 const padTime = (time: number): string => {
   return time < 10 ? `0${time}` : `${time}`;
@@ -16,7 +17,7 @@ const ProfileItem = ({ profile }: { profile: IProfile }) => {
         <span className="text-3xl absolute top-5 left-5 flex items-center transition-all duration-300 ease-in-out">
           {profile.icon}
         </span>
-        <SquareArrowOutUpRight className="text-zinc-900 w-8 h-8 absolute top-5 right-5" />
+        <EditProfile profile={profile} />
         <h5
           className={`text-5xl font-semibold text-zinc-50 transition-all duration-300 ease-in-out group-hover:text-zinc-800`}
         >

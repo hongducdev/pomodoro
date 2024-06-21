@@ -12,7 +12,7 @@ import CreateFormProfile from "@/components/create-form-profile";
 import useFormCreateProfile from "@/stores/useFormCreateProfile";
 
 const CreateProfile = () => {
-	const {isOpen, toggle} = useFormCreateProfile(); // Access the form dialog state
+	const {isOpen, toggle} = useFormCreateProfile();
 
 	return (
 		<Dialog open={isOpen} onOpenChange={toggle}>

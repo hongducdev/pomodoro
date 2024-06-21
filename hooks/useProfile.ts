@@ -1,51 +1,58 @@
 import { useEffect, useState } from "react";
 import { IProfile } from "@/@types";
 import useFormCreateProfile from "@/stores/useFormCreateProfile";
+import {
+  addProfile as addProfileToDB,
+  getAllProfiles,
+  updateProfile as updateProfileInDB,
+  deleteProfile as deleteProfileFromDB,
+} from "@/db";
 
 const useProfile = () => {
-	const [ profiles, setProfiles ] = useState<IProfile[]>([]);
-	const {isLoadData} = useFormCreateProfile();
+  const [profiles, setProfiles] = useState<IProfile[]>([]);
+  const { isLoadData } = useFormCreateProfile();
 
-	useEffect(() => {
-		const storedProfiles = localStorage.getItem('profiles');
-		if (storedProfiles) {
-			setProfiles(JSON.parse(storedProfiles));
-			if (isLoadData) {
-				useFormCreateProfile.getState().setIsLoadData(false);
-			}
-		}
-	}, [ isLoadData ]);
+  useEffect(() => {
+    const loadProfiles = async () => {
+      const storedProfiles = await getAllProfiles();
+      setProfiles(storedProfiles);
+      if (isLoadData) {
+        useFormCreateProfile.getState().setIsLoadData(false);
+      }
+    };
+    loadProfiles();
+  }, [isLoadData]);
 
-	const saveProfilesToLocalStorage = (profiles: IProfile[]) => {
-		localStorage.setItem('profiles', JSON.stringify(profiles));
-	};
+  const addProfile = async (profile: IProfile) => {
+    await addProfileToDB(profile);
+    setProfiles((prevProfiles) => [...prevProfiles, profile]);
+  };
 
-	const addProfile = (profile: IProfile) => {
-		const newProfiles = [ ...profiles, profile ];
-		setProfiles(newProfiles);
-		saveProfilesToLocalStorage(newProfiles);
-	};
+  const updateProfile = async (
+    id: string,
+    updatedProfile: Partial<IProfile>
+  ) => {
+    await updateProfileInDB(id, updatedProfile);
+    setProfiles((prevProfiles) =>
+      prevProfiles.map((profile) =>
+        profile.id === id ? { ...profile, ...updatedProfile } : profile
+      )
+    );
+  };
 
-	const updateProfile = (id: string, updatedProfile: Partial<IProfile>) => {
-		const newProfiles = profiles.map(profile =>
-			profile.id === id ? {...profile, ...updatedProfile} : profile
-		);
-		setProfiles(newProfiles);
-		saveProfilesToLocalStorage(newProfiles);
-	};
+  const deleteProfile = async (id: string) => {
+    await deleteProfileFromDB(id);
+    setProfiles((prevProfiles) =>
+      prevProfiles.filter((profile) => profile.id !== id)
+    );
+  };
 
-	const deleteProfile = (id: string) => {
-		const newProfiles = profiles.filter(profile => profile.id !== id);
-		setProfiles(newProfiles);
-		saveProfilesToLocalStorage(newProfiles);
-	};
-
-	return {
-		profiles,
-		addProfile,
-		updateProfile,
-		deleteProfile,
-	};
+  return {
+    profiles,
+    addProfile,
+    updateProfile,
+    deleteProfile,
+  };
 };
 
 export default useProfile;
