@@ -25,7 +25,9 @@ const state: State = proxy<State>({
   playing: false,
   async play() {
     if (audio) {
-      audio.src = getRandomTrackUrl();
+      if (!state.playing) {
+        audio.src = getRandomTrackUrl();
+      }
       await audio.play();
       state.playing = true;
     }
@@ -47,8 +49,9 @@ export const usePlayer = () => {
         state.canplay = true;
       });
 
-      audio.addEventListener("ended", () => {
+      audio.addEventListener("ended", async () => {
         state.playing = false;
+        await state.play();
       });
     }
 
