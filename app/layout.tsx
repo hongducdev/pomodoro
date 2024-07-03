@@ -4,6 +4,7 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import { siteConfig } from "@/config/site";
+import PlayLofi from "@/components/play-lofi";
 
 const outfit = Outfit({ subsets: ["latin"] });
 
@@ -73,6 +74,7 @@ export default function RootLayout({
         <div className="bg-zinc-950 antialiased bg-dot-olivia/[0.5] w-full h-screen flex items-center justify-center">
           {children}
         </div>
+        <PlayLofi />
       </body>
     </html>
   );
