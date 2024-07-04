@@ -24,7 +24,7 @@ const CreateFormProfile = () => {
     <FormProfile
       initialValues={{
         title: "",
-        icon: "",
+        icon: "📖",
         minutes: "0",
         seconds: "0",
         background: "",
