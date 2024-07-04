@@ -47,11 +47,16 @@ const useProfile = () => {
     );
   };
 
+  const getProfileById = (id: string): IProfile | undefined => {
+    return profiles.find((profile) => profile.id === id);
+  };
+
   return {
     profiles,
     addProfile,
     updateProfile,
     deleteProfile,
+    getProfileById,
   };
 };
 
