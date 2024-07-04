@@ -2,8 +2,9 @@ import { IProfile } from "@/@types";
 import { SquareArrowOutUpRight } from "lucide-react";
 import EditProfile from "./edit-profile";
 
-const padTime = (time: number): string => {
-  return time < 10 ? `0${time}` : `${time}`;
+const padTime = (time: number | string): string => {
+  const num = typeof time === 'string' ? parseInt(time, 10) : time;
+  return num < 10 ? `0${num}` : `${num}`;
 };
 
 const ProfileItem = ({ profile }: { profile: IProfile }) => {

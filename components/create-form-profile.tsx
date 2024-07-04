@@ -11,8 +11,8 @@ const CreateFormProfile = () => {
     addProfile({
       id: `${Date.now()}`,
       name: values.title,
-      minutes: values.minutes,
-      seconds: values.seconds,
+      minutes: values.minutes.toString(),
+      seconds: values.seconds.toString(),
       icon: values.icon,
       background: values.background,
     });
@@ -25,8 +25,8 @@ const CreateFormProfile = () => {
       initialValues={{
         title: "",
         icon: "",
-        minutes: 0,
-        seconds: 0,
+        minutes: "0",
+        seconds: "0",
         background: "",
       }}
       onSubmit={onSubmit}

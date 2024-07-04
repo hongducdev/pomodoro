@@ -7,22 +7,28 @@ import { IProfile } from "@/@types";
 import useFormCreateProfile from "@/stores/useFormCreateProfile";
 
 const ProfilePage = () => {
-	const {profiles} = useProfile();
-	const {isLoadData} = useFormCreateProfile();
-	const [ profilesData, setProfilesData ] = useState<IProfile[]>(profiles);
+  const { profiles } = useProfile();
+  const { isLoadData } = useFormCreateProfile();
+  const [profilesData, setProfilesData] = useState<IProfile[]>(profiles);
 
-	useEffect(() => {
-		setProfilesData(profiles);
-	}, [ profiles, isLoadData ]);
+  useEffect(() => {
+    setProfilesData(profiles);
+  }, [profiles, isLoadData]);
 
-	return (
-		<div className="grid grid-cols-3 gap-3">
-			{profilesData && profilesData.length > 0 && profilesData.map((profile) => (
-				<ProfileItem key={profile.id} profile={profile}/>
-			))}
-			<CreateProfile/>
-		</div>
-	);
+  return (
+    <>
+      {profilesData && profilesData.length > 0 ? (
+        <div className="grid grid-cols-3 gap-5">
+          {profilesData.map((profile) => (
+            <ProfileItem key={profile.id} profile={profile} />
+          ))}
+          <CreateProfile />
+        </div>
+      ) : (
+        <CreateProfile />
+      )}
+    </>
+  );
 };
 
 export default ProfilePage;

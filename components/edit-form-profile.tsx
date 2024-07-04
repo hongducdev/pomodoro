@@ -6,7 +6,7 @@ import { IProfile } from "@/@types";
 import FormProfile, { formSchema } from "./form-profile";
 
 const EditFormProfile = ({ profile }: { profile: IProfile }) => {
-  const { updateProfile } = useProfile();
+  const { updateProfile, deleteProfile } = useProfile();
   const { close } = useFormUpdateProfile();
   const { setIsLoadData } = useFormCreateProfile();
 
@@ -22,6 +22,12 @@ const EditFormProfile = ({ profile }: { profile: IProfile }) => {
     setIsLoadData(true);
   };
 
+  const onDelete = () => {
+    deleteProfile(profile.id);
+    close();
+    setIsLoadData(true);
+  };
+
   return (
     <FormProfile
       initialValues={{
@@ -33,6 +39,8 @@ const EditFormProfile = ({ profile }: { profile: IProfile }) => {
       }}
       onSubmit={onSubmit}
       buttonLabel="Update Profile"
+      isDelete
+      onDelete={onDelete}
     />
   );
 };

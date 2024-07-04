@@ -36,14 +36,14 @@ export const formSchema = z.object({
   icon: z.string().min(1, { message: "Icon must be at least 1 character." }),
   minutes: z
     .string()
-    .transform((val) => (val === "" ? 0 : parseInt(val, 10)))
-    .refine((val) => !isNaN(val) && val >= 0, {
+    .transform((val) => (val === "" ? "0" : val))
+    .refine((val) => !isNaN(parseInt(val, 10)) && parseInt(val, 10) >= 0, {
       message: "Minutes must be a non-negative integer.",
     }),
   seconds: z
     .string()
-    .transform((val) => (val === "" ? 0 : parseInt(val, 10)))
-    .refine((val) => !isNaN(val) && val >= 0, {
+    .transform((val) => (val === "" ? "0" : val))
+    .refine((val) => !isNaN(parseInt(val, 10)) && parseInt(val, 10) >= 0, {
       message: "Seconds must be a non-negative integer.",
     }),
   background: z.string(),
@@ -53,12 +53,16 @@ interface FormProfileProps {
   initialValues: Partial<z.infer<typeof formSchema>>;
   onSubmit: (values: z.infer<typeof formSchema>) => void;
   buttonLabel: string;
+  isDelete?: boolean;
+  onDelete?: () => void;
 }
 
 const FormProfile = ({
   initialValues,
   onSubmit,
   buttonLabel,
+  isDelete = false,
+  onDelete,
 }: FormProfileProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -158,9 +162,20 @@ const FormProfile = ({
             </FormItem>
           )}
         />
-        <Button className="bg-summer-dog text-zin-950 w-full" type="submit">
-          {buttonLabel}
-        </Button>
+        <div className="flex items-center gap-4">
+          {isDelete && (
+            <Button
+              className="bg-roseanna text-zin-950 w-full"
+              type="button"
+              onClick={onDelete}
+            >
+              Delete Profile
+            </Button>
+          )}
+          <Button className="bg-summer-dog text-zin-950 w-full" type="submit">
+            {buttonLabel}
+          </Button>
+        </div>
       </form>
     </Form>
   );
