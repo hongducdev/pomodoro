@@ -8,21 +8,27 @@ import useAudio from "@/hooks/useAudio";
 import useNotification from "@/hooks/useNotification";
 
 interface TimerCountdownProps {
-  initialMinutes?: string;
-  initialSeconds?: string;
+  initialWorkMinutes?: string;
+  initialWorkSeconds?: string;
+  initialBreakMinutes?: string;
+  initialBreakSeconds?: string;
   background?: string;
 }
 
 const TimerCountdown = ({
-  initialMinutes = "25",
-  initialSeconds = "0",
+  initialWorkMinutes = "25",
+  initialWorkSeconds = "0",
+  initialBreakMinutes = "5",
+  initialBreakSeconds = "0",
   background = "bg-summer-dog",
 }: TimerCountdownProps) => {
   const [isStarted, setIsStarted] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
+  const [isBreak, setIsBreak] = useState(false);
+  const [cycleCount, setCycleCount] = useState(0);
   const [time, setTime] = useState({
-    minutes: initialMinutes,
-    seconds: initialSeconds,
+    minutes: initialWorkMinutes,
+    seconds: initialWorkSeconds,
   });
   const [elapsedTime, setElapsedTime] = useState(0);
   const { play: playButtonSound } = useAudio("/sounds/click.mp3");
@@ -36,8 +42,9 @@ const TimerCountdown = ({
     body: "Your timer has finished.",
   });
   const intervalRef = useRef<number | null>(null);
-  const totalTime =
-    parseInt(initialMinutes, 10) * 60 + parseInt(initialSeconds, 10);
+  const totalTime = isBreak
+    ? parseInt(initialBreakMinutes, 10) * 60 + parseInt(initialBreakSeconds, 10)
+    : parseInt(initialWorkMinutes, 10) * 60 + parseInt(initialWorkSeconds, 10);
 
   useEffect(() => {
     if (isStarted && !isComplete) {
@@ -52,8 +59,26 @@ const TimerCountdown = ({
               resetTickingSound();
               playCompleteSound();
               sendNotification();
-              setIsComplete(true);
+              if (isBreak) {
+                if (cycleCount < 4) {
+                  setCycleCount(cycleCount + 1);
+                  setTime({
+                    minutes: initialWorkMinutes,
+                    seconds: initialWorkSeconds,
+                  });
+                  setIsBreak(false);
+                } else {
+                  setIsComplete(true);
+                }
+              } else {
+                setTime({
+                  minutes: initialBreakMinutes,
+                  seconds: initialBreakSeconds,
+                });
+                setIsBreak(true);
+              }
               setIsStarted(false);
+              setElapsedTime(0);
               return { minutes: "0", seconds: "0" };
             } else {
               newTime.minutes = String(parseInt(newTime.minutes, 10) - 1);
@@ -75,11 +100,17 @@ const TimerCountdown = ({
   }, [
     isStarted,
     isComplete,
+    isBreak,
+    cycleCount,
     pauseTickingSound,
     playCompleteSound,
     playTickingSound,
     resetTickingSound,
     sendNotification,
+    initialWorkMinutes,
+    initialWorkSeconds,
+    initialBreakMinutes,
+    initialBreakSeconds,
   ]);
 
   const handleStart = () => {
@@ -94,8 +125,10 @@ const TimerCountdown = ({
   const handleReset = () => {
     setIsStarted(false);
     setIsComplete(false);
+    setIsBreak(false);
+    setCycleCount(0);
     clearInterval(intervalRef.current!);
-    setTime({ minutes: initialMinutes, seconds: initialSeconds });
+    setTime({ minutes: initialWorkMinutes, seconds: initialWorkSeconds });
     setElapsedTime(0);
     resetTickingSound();
   };
@@ -103,7 +136,20 @@ const TimerCountdown = ({
   const progressValue = ((totalTime - elapsedTime) / totalTime) * 100;
 
   return (
-    <div className="mt-10 mb-5 flex flex-col items-center justify-center">
+    <div className="mt-5 flex flex-col items-center justify-center">
+      <div className="flex space-x-1 my-2">
+        {Array.from({ length: 4 }, (_, i) => (
+          <span
+            key={i}
+            className={`text-2xl ${
+              i < cycleCount ? "grayscale-0" : "grayscale"
+            }`}
+          >
+            🍅
+          </span>
+        ))}
+      </div>
+
       <div className="flex items-center space-x-2 text-8xl">
         <span>{String(time.minutes).padStart(2, "0")}</span>
         <span>:</span>

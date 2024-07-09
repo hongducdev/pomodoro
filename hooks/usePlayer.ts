@@ -1,11 +1,9 @@
 import { useEffect } from "react";
 import { proxy, useSnapshot } from "valtio";
 
-// Define the base URL and the range of tracks
 const BASE_URL = "https://lofi-co-assets.vexcited.com/ogtracks/chill/";
 const TRACK_COUNT = 24;
 
-// Helper function to get a random track URL
 const getRandomTrackUrl = () => {
   const trackNumber = Math.floor(Math.random() * TRACK_COUNT) + 1;
   return `${BASE_URL}chill_${trackNumber}.mp3`;

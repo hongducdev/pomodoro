@@ -7,10 +7,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { SquareArrowOutUpRight } from "lucide-react";
 import EditFormProfile from "./edit-form-profile";
 import { IProfile } from "@/@types";
 import useFormUpdateProfile from "@/stores/useFormUpdateProfile";
+import { Settings2 } from "lucide-react";
 
 const EditProfile = ({ profile }: { profile: IProfile }) => {
   const { isOpen, toggle } = useFormUpdateProfile();
@@ -18,7 +18,7 @@ const EditProfile = ({ profile }: { profile: IProfile }) => {
   return (
     <Dialog open={isOpen} onOpenChange={toggle}>
       <DialogTrigger asChild>
-        <SquareArrowOutUpRight className="text-zinc-900 w-8 h-8 absolute top-5 right-5" />
+        <Settings2 className="text-zinc-900 w-8 h-8 absolute top-5 right-5 cursor-pointer" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

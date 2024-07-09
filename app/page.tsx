@@ -12,13 +12,28 @@ const HomePage = () => {
             <TabsTrigger value="longBreak">Long Break</TabsTrigger>
           </TabsList>
           <TabsContent value="pomodoro">
-            <TimerCountdown initialMinutes="25" initialSeconds="0" />
+            <TimerCountdown
+              initialWorkMinutes="25"
+              initialWorkSeconds="0"
+              initialBreakMinutes="5"
+              initialBreakSeconds="0"
+            />
           </TabsContent>
           <TabsContent value="shortBreak">
-            <TimerCountdown initialMinutes="5" initialSeconds="0" />
+            <TimerCountdown
+              initialWorkMinutes="5"
+              initialWorkSeconds="0"
+              initialBreakMinutes="5"
+              initialBreakSeconds="0"
+            />
           </TabsContent>
           <TabsContent value="longBreak">
-            <TimerCountdown initialMinutes="15" initialSeconds="0" />
+            <TimerCountdown
+              initialWorkMinutes="15"
+              initialWorkSeconds="0"
+              initialBreakMinutes="5"
+              initialBreakSeconds="0"
+            />
           </TabsContent>
         </Tabs>
       </div>

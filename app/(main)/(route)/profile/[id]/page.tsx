@@ -18,7 +18,7 @@ const ProfileDetailPage = ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <div>
+    <div className="max-h-screen">
       <div className={`w-[800px] ${profile.background} p-0.5 rounded-xl`}>
         <div className="bg-zinc-950 text-zinc-50 p-5 rounded-xl text-center">
           <div className="text-3xl flex items-center justify-center">
@@ -26,8 +26,10 @@ const ProfileDetailPage = ({ params }: { params: { id: string } }) => {
             <h1 className="font-semibold">{profile.name}</h1>
           </div>
           <TimerCountdown
-            initialMinutes={profile.minutes}
-            initialSeconds={profile.seconds}
+            initialWorkMinutes={profile.minutes}
+            initialWorkSeconds={profile.seconds}
+            initialBreakMinutes="1"
+            initialBreakSeconds="0"
             background={profile.background}
           />
         </div>

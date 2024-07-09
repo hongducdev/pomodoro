@@ -1,5 +1,5 @@
 "use client";
-import { BookHeart, Home, Settings2 } from "lucide-react";
+import { Bolt, BookHeart, Home } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -16,7 +16,7 @@ interface INavbarItem {
   title: string;
   url?: string;
   icon: React.ReactNode;
-  isButton?: boolean; // Add this property to differentiate between links and buttons
+  isButton?: boolean;
 }
 
 const NavbarList: INavbarItem[] = [
@@ -36,7 +36,7 @@ const NavbarList: INavbarItem[] = [
     id: 3,
     title: "Settings",
     url: "/settings",
-    icon: <Settings2 />,
+    icon: <Bolt />,
   },
   {
     id: 4,
