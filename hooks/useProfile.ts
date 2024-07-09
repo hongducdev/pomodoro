@@ -6,7 +6,7 @@ import {
   getAllProfiles,
   updateProfile as updateProfileInDB,
   deleteProfile as deleteProfileFromDB,
-} from "@/db";
+} from "@/db/profile";
 
 const useProfile = () => {
   const [profiles, setProfiles] = useState<IProfile[]>([]);

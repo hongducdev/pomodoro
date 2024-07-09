@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { Progress } from "@/components/ui/progress";
 import useAudio from "@/hooks/useAudio";
 import useNotification from "@/hooks/useNotification";
+import { saveTime } from "@/db/time";
 
 interface TimerCountdownProps {
   initialWorkMinutes?: string;
@@ -59,6 +60,10 @@ const TimerCountdown = ({
               resetTickingSound();
               playCompleteSound();
               sendNotification();
+              const now = new Date();
+              const today = `${now.getFullYear()}-${
+                now.getMonth() + 1
+              }-${now.getDate()}`;
               if (isBreak) {
                 if (cycleCount < 4) {
                   setCycleCount(cycleCount + 1);
@@ -67,6 +72,7 @@ const TimerCountdown = ({
                     seconds: initialWorkSeconds,
                   });
                   setIsBreak(false);
+                  saveTime(today, 0, totalTime);
                 } else {
                   setIsComplete(true);
                 }
@@ -76,6 +82,7 @@ const TimerCountdown = ({
                   seconds: initialBreakSeconds,
                 });
                 setIsBreak(true);
+                saveTime(today, totalTime, 0);
               }
               setIsStarted(false);
               setElapsedTime(0);
@@ -111,6 +118,7 @@ const TimerCountdown = ({
     initialWorkSeconds,
     initialBreakMinutes,
     initialBreakSeconds,
+    totalTime,
   ]);
 
   const handleStart = () => {
